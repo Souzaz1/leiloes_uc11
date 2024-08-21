@@ -1,6 +1,18 @@
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -135,16 +147,22 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+        try {
+            String idStr = id_produto_venda.getText();
+            int id = Integer.parseInt(idStr);
 
-        ProdutosDAO produtosdao = new ProdutosDAO();
-
-        produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            produtosdao.venderProduto(id);
+            listarProdutos(); // Atualize a lista de produtos
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID do produto inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao vender o produto: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-         Vendas vendas = new Vendas(); 
+        Vendas vendas = new Vendas();
         vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
